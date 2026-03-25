@@ -1,11 +1,40 @@
-import random
 
-element = "+-/*!&$#?=@abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-tamano = int(input("elige cuantos caracteres tendra la contraseña"))
+import discord
 
-password = ""
+from discord.ext import commands
 
-for i in range(tamano):
-    password += random.choice(element)
+from bot_logic import gen_pass
 
-print("contraseña:", password)
+ 
+
+intents = discord.Intents.default()
+
+intents.message_content = True
+
+ 
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+ 
+
+@bot.event
+
+async def on_ready():
+
+    print(f'Hemos iniciado sesión como {bot.user}')
+
+ 
+
+@bot.command()
+
+async def hello(ctx):
+
+    await ctx.send(f'Hola, soy un bot {bot.user}!')
+
+ 
+
+@bot.command()
+
+async def pasw(ctx):
+
+    await ctx.send(gen_pass(10))
